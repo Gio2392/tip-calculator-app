@@ -10,63 +10,66 @@ const d = document,
 let percent = 0;
 
 
-function calc(){
-    if($bill.value >= 0 && $cantPeople.value >= 1 && percent >= 0){
+function calc() {
+    if ($bill.value >= 0 && $cantPeople.value >= 1 && percent >= 0) {
         let tipAmount = ($bill.value / $cantPeople.value * percent) / 100;
         let total = $bill.value / $cantPeople.value + tipAmount;
 
         $reset.classList.add("active");
         $tipAmount.textContent = `$${tipAmount.toFixed(2)}`;
         $total.textContent = `$${total.toFixed(2)}`;
-    }else{
+    } else {
         error();
     }
 }
+
 function reset() {
     $reset.classList.remove("active");
     $validation.style.display = "none";
     $tipAmount.textContent = `$0.00`;
     $total.textContent = `$0.00`;
 }
-function uncheck(){
+
+function uncheck() {
     $percent.forEach(per => {
         per.checked = false;
     })
 }
-function error(){
-    if(!($cantPeople.value >= 1) || $cantPeople.value === ""){
+
+function error() {
+    if (!($cantPeople.value >= 1) || $cantPeople.value === "") {
         $validation.style.display = "block";
         $cantPeople.classList.add("error");
-    }else{
+    } else {
         $validation.style.display = "none";
-        $cantPeople.classList.remove("error");        
+        $cantPeople.classList.remove("error");
     }
 }
 $percent.forEach((per) => {
-    per.addEventListener("click", () => {        
+    per.addEventListener("click", () => {
         percent = per.value;
         calc();
     })
 })
 d.addEventListener("click", (e) => {
-    if (e.target.matches(".input-percent")){
+    if (e.target.matches(".input-percent")) {
         percent = $inputPercent.value;
         uncheck();
         calc();
     }
-    if (e.target.matches(".button")){
+    if (e.target.matches(".button")) {
         reset();
     }
 })
 d.addEventListener("input", (e) => {
-    if(e.target.matches("#amount")){
+    if (e.target.matches("#amount")) {
         calc();
     }
-    if(e.target.matches("#people")){
+    if (e.target.matches("#people")) {
         error();
         calc();
     }
-    if (e.target.matches(".input-percent")){
+    if (e.target.matches(".input-percent")) {
         percent = $inputPercent.value;
         calc();
     }
